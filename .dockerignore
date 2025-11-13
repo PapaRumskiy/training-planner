@@ -1,0 +1,51 @@
+# Python кеші і збірки
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Віртуальні середовища
+venv/
+env/
+ENV/
+.venv/
+
+# IDE та редактори
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Тести / покриття
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Змінні оточення (секрети)
+.env
+.env.local
+
+# Git
+.git/
+.gitignore
+
+# Docker файли (опціонально)
+.dockerignore
+
+# Документація
+*.md
+docs/
+
+# Локальні лог-файли та бази даних
+*.log
+*.sqlite3
+*.sqlite3-journal
+
+# Системні файли
+.DS_Store
+Thumbs.db
