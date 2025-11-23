@@ -31,3 +31,10 @@ class CalendarViewSet(viewsets.ModelViewSet):
     serializer_class=CalendarSerializer
 
     
+
+
+def index(request):
+    return render(request, "main/index.html")
+
+def exercises(request):
+    return render(request, "main/exercises.html")
