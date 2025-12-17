@@ -9,32 +9,62 @@ header {
     background: #333;
     color: white;
     padding: 15px;
+    /* Додаємо центрування для заголовка */
+    text-align: center;
 }
 
 header h1 {
-    margin: 0;
+    margin: 0 0 10px 0;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     display: flex;
-    gap: 15px;
+    /* Центруємо елементи навігації */
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+/* МАГІЯ: Знаходимо останній елемент (Profile) і штовхаємо його вправо */
+nav ul li:last-child {
+    margin-left: auto;
+    /* Щоб збалансувати відступ зліва і профіль не прилипав до краю,
+       можна додати невеликий padding-right */
+    padding-right: 20px;
+}
+
+/* Щоб ліва частина меню залишалася по центру, додамо порожній відступ зліва
+   для першого елемента (це вирівняє баланс через margin-left: auto у профілю) */
+nav ul li:first-child {
+    margin-left: auto;
 }
 
 nav ul li a {
     color: white;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Відступ між іконкою та текстом */
 }
 
 nav ul li a.active {
     text-decoration: underline;
 }
 
+/* Центрування основного контенту */
 main {
     padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* Решта твоїх стилів без змін */
 .welcome {
     text-align: center;
     margin-bottom: 30px;
@@ -59,6 +89,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: center; /* Щоб картки теж були по центру */
 }
 
 .exercise-card {

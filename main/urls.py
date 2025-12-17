@@ -17,7 +17,10 @@ router.register(r'calendars', CalendarViewSet)
 urlpatterns = [
     path('api/', include(router.urls)),
     path("", views.index, name="index"),
-    path("exercises", views.exercises, name="exercises")
+    path("exercises", views.exercises, name="exercises"),
+    path("workouts", views.workouts, name="workouts"),
+    path("profiles", views.profile, name="profile"),
+    path("calendars", views.calendar, name="calendar")
 ]
 
 

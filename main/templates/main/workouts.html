@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Мої тренування{% endblock %}
+
+{% block content %}
+    <h2>Програми тренувань</h2>
+    <button>Створити нове тренування</button>
+
+    <table border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Назва</th>
+                <th>Тривалість</th>
+                <th>Складність</th>
+                <th>Дія</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ранкове кардіо</td>
+                <td>30 хв</td>
+                <td>Легко</td>
+                <td><a href="#">Почати</a></td>
+            </tr>
+            <tr>
+                <td>Силове тренування</td>
+                <td>60 хв</td>
+                <td>Важко</td>
+                <td><a href="#">Почати</a></td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <meta charset="UTF-8">
     <title>{% block title %}Training Planner{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
@@ -14,9 +15,9 @@
             <ul>
                 <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'exercises' %}">Exercises</a></li>
-                <li><a href="#">Workouts</a></li>
-                <li><a href="#">Calendar</a></li>
-                <li><a href="#">Profile</a></li>
+                <li><a href="{% url 'workouts' %}">Workouts</a></li>
+                <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
             </ul>
         </nav>
     </header>

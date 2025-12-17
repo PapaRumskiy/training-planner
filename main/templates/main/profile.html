@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Мій профіль{% endblock %}
+
+{% block content %}
+    <h2>Профіль користувача</h2>
+
+    <div class="profile-info">
+        <p><strong>Ім'я:</strong> Іван Іваненко</p>
+        <p><strong>Вік:</strong> 22 роки</p>
+        <p><strong>Вага:</strong> 75 кг</p>
+        <p><strong>Зріст:</strong> 180 см</p>
+    </div>
+
+    <hr>
+
+    <h3>Моя статистика</h3>
+    <ul>
+        <li>Всього тренувань: 12</li>
+        <li>Спалено калорій: 4500</li>
+    </ul>
+
+    <button>Редагувати профіль</button>
+{% endblock %}

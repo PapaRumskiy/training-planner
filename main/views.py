@@ -38,3 +38,12 @@ def index(request):
 
 def exercises(request):
     return render(request, "main/exercises.html")
+
+def workouts(request):
+    return render(request, "main/workouts.html")
+
+def profile(request):
+    return render(request, "main/profile.html")
+
+def calendar(request):
+    return render(request, "main/calendar.html")
