@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="content-container">
+    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2 style="color: white; font-size: 24px; letter-spacing: 2px;">КАТАЛОГ ВПРАВ</h2>
+        <a href="#" class="btn-main" style="width: auto; padding: 10px 25px; text-decoration: none;">
+            <i class="fa-solid fa-plus"></i> ДОДАТИ
+        </a>
+    </div>
+
+    <div class="cards-container">
+        {% for ex in exercises %}
+            <div class="exercise-card">
+                <div class="card-img-wrap">
+                    {% if ex.image %}
+                        <img src="{{ ex.image.url }}" alt="{{ ex.name }}">
+                    {% else %}
+                        <div style="height: 100%; display: flex; align-items: center; justify-content: center; background: #1a1a1a;">
+                            <i class="fa-solid fa-dumbbell" style="font-size: 40px; color: #333;"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="card-info">
+                    <h3>{{ ex.name }}</h3>
+                    <span class="badge easy">{{ ex.category }}</span>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="exercise-card">
+            <div class="card-img-wrap"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=600" alt="Squat"></div>
+            <div class="card-info"><h3>Відтискання</h3><span class="badge hard">Груди</span></div>
+        </div>
+        <div class="exercise-card">
+            <div class="card-img-wrap"><img src="https://i.ytimg.com/vi/nXAI6yyUQLk/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGFogWihaMA8=&rs=AOn4CLBZug1prsTM3ZVQyKX6NigOMXWbJQ" alt="Bench"></div>
+            <div class="card-info"><h3>Жим лежачи</h3><span class="badge hard">Груди</span></div>
+        </div>
+        <div class="exercise-card">
+            <div class="card-img-wrap"><img src="https://cyborgseason.com/wp-content/themes/cyborgseason2025/images/newsletter-c2a.jpg" alt="Run"></div>
+            <div class="card-info"><h3>Біг</h3><span class="badge easy">Кардіо</span></div>
+        </div>
+        <div class="exercise-card">
+            <div class="card-img-wrap"><img src="https://fitness-ua.com.ua/wp-content/uploads/2023/07/image-2023-07-30T005735.705.jpg" alt="Deadlift"></div>
+            <div class="card-info"><h3>Станова тяга</h3><span class="badge hard">Спина</span></div>
+        </div>
+        <div class="exercise-card">
+            <div class="card-img-wrap"><img src="https://www.rbc.ua/static/img/p/o/podtyagivaniya_1_cde44c3f741fc7fdeb5ed978c078b37e_1300x820.jpg" alt="Pullup"></div>
+            <div class="card-info"><h3>Підтягування</h3><span class="badge hard">Спина</span></div>
+        </div>
+         <div class="exercise-card">
+            <div class="card-img-wrap"><img src="https://health4you.com.ua/wp-content/uploads/2022/08/skruchuvannya-sydyachy.png" alt="Abs"></div>
+            <div class="card-info"><h3>Скручування</h3><span class="badge easy">Прес</span></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

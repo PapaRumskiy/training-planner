@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Мої тренування{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2 style="font-size: 2rem; color: white;">ПРОГРАМИ ТРЕНУВАНЬ</h2>
+
+        <a href="#" class="btn-main" style="width: auto; padding: 12px 30px; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+            <i class="fa-solid fa-plus"></i> СТВОРИТИ НОВЕ
+        </a>
+    </div>
+
+    <div class="big-card">
+        <table class="custom-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th style="width: 40%;">Назва програми</th>
+                    <th>Тривалість</th>
+                    <th>Складність</th>
+                    <th>Статус</th>
+                    <th style="text-align: right;">Дія</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="background: rgba(46, 204, 113, 0.2); padding: 10px; border-radius: 10px; color: #2ecc71;">
+                                <i class="fa-solid fa-person-running fa-lg"></i>
+                            </div>
+                            <span style="font-weight: 700; font-size: 18px;">Ранкове Кардіо</span>
+                        </div>
+                    </td>
+                    <td>30 хв</td>
+                    <td><span class="badge easy">Легко</span></td>
+                    <td style="color: #bbb;">Активно</td>
+                    <td style="text-align: right;"><a href="#" class="btn-action">ПОЧАТИ</a></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="background: rgba(231, 76, 60, 0.2); padding: 10px; border-radius: 10px; color: #e74c3c;">
+                                <i class="fa-solid fa-dumbbell fa-lg"></i>
+                            </div>
+                            <span style="font-weight: 700; font-size: 18px;">Силовий Монстр</span>
+                        </div>
+                    </td>
+                    <td>90 хв</td>
+                    <td><span class="badge hard">Важко</span></td>
+                    <td style="color: #bbb;">Активно</td>
+                    <td style="text-align: right;"><a href="#" class="btn-action">ПОЧАТИ</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

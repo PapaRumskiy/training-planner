@@ -1,0 +1,304 @@
+:root {
+    --primary: #00d1b2;
+    --primary-hover: #00b89c;
+    --text-main: #ffffff;
+    --glass-bg: rgba(20, 20, 20, 0.7);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    --sidebar-width: 80px;
+    --header-height: 70px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-main);
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)),
+                url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.site-body { display: flex; flex-direction: column; height: 100vh; }
+
+.main-layout {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - var(--header-height));
+    overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    border-right: var(--glass-border);
+    display: flex; flex-direction: column; align-items: center; padding: 30px 0; z-index: 200;
+}
+.sidebar a { color: #666; font-size: 24px; transition: 0.3s; margin-bottom: 35px; display: flex; justify-content: center; }
+.sidebar a:hover { color: var(--primary); transform: scale(1.1); filter: drop-shadow(0 0 5px var(--primary)); }
+
+/* Header */
+.main-header {
+    height: var(--header-height);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    border-bottom: var(--glass-border);
+    display: flex; align-items: center; z-index: 100;
+}
+.header-container { width: 100%; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-weight: 900; font-size: 22px; color: white; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
+.logo span { color: var(--primary); }
+
+.nav-register-btn { background: var(--primary); color: white; padding: 8px 25px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 12px; transition: 0.3s; }
+.nav-register-btn:hover { box-shadow: 0 0 15px rgba(0, 209, 178, 0.4); }
+.nav-item { color: #ccc; text-decoration: none; font-weight: 600; font-size: 12px; margin-right: 20px; transition: 0.3s; }
+.nav-item:hover { color: white; }
+.logout-btn { background: none; border: none; color: #888; font-weight: 700; cursor: pointer; text-transform: uppercase; font-size: 12px; transition: 0.3s; }
+.logout-btn:hover { color: #ff4757; }
+
+/* Page Wrapper */
+.page-wrapper {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* --- HERO SECTION (ДЛЯ ГОЛОВНОЇ) --- */
+.hero-section {
+    width: 100%;
+    height: 100%; /* На всю висоту контейнера */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.hero-container h1 { font-size: 3rem; text-transform: uppercase; letter-spacing: 4px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); margin: 0; }
+.hero-container p { font-size: 1.2rem; color: #ccc; margin-top: -10px; }
+
+.main-navigation-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-top: 30px; }
+.nav-card { background: var(--glass-bg); border: var(--glass-border); padding: 50px; border-radius: 20px; text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; gap: 20px; transition: 0.4s; backdrop-filter: blur(10px); width: 250px; }
+.nav-card:hover { transform: translateY(-10px); border-color: var(--primary); background: rgba(30,30,30,0.9); }
+.nav-card i { font-size: 40px; }
+.nav-card.yellow i { color: #f1c40f; }
+.nav-card.orange i { color: #e67e22; }
+.nav-card.blue i { color: #00d1b2; }
+.nav-card.purple i { color: #9b59b6; }
+
+/* --- CALENDAR STYLES --- */
+.calendar-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    /* overflow: hidden;  Прибираємо скрол контейнера */
+}
+
+#calendar {
+    flex: 1;
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    padding: 20px; /* Трохи менший паддінг, щоб влізло */
+    font-family: 'Montserrat', sans-serif;
+    height: 100%;
+}
+
+/* Прибираємо скрол всередині календаря */
+.fc-scroller { overflow: hidden !important; }
+.fc-theme-standard td, .fc-theme-standard th { border: 1px solid rgba(255, 255, 255, 0.05); }
+.fc-scrollgrid { border: none !important; }
+
+/* Дні */
+.fc-col-header-cell { padding: 15px 0; background: rgba(255,255,255,0.02); color: var(--primary); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+.fc-daygrid-day-number { color: #aaa; text-decoration: none; padding: 10px; font-weight: 600; font-size: 14px; cursor: pointer; } /* Курсор pointer для днів */
+.fc-day-today { background: rgba(0, 209, 178, 0.08) !important; }
+
+/* Toolbar */
+.fc-header-toolbar { margin-bottom: 20px !important; }
+.fc-toolbar-title { font-size: 2rem !important; text-transform: uppercase; color: white; letter-spacing: 3px; font-weight: 300; }
+.fc-button { background: transparent !important; border: 1px solid rgba(255,255,255,0.2) !important; border-radius: 12px !important; text-transform: uppercase; font-weight: 700; transition: 0.3s; }
+.fc-button:hover { border-color: var(--primary) !important; color: var(--primary) !important; }
+.fc-button-active { background: var(--primary) !important; border-color: var(--primary) !important; color: white !important; }
+
+/* Події */
+.fc-event { border: none; border-radius: 4px; padding: 4px 8px; font-size: 12px; margin-top: 2px; cursor: pointer; transition: 0.2s; }
+.fc-event:hover { transform: scale(1.02); }
+
+/* --- EXERCISES --- */
+.content-container { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+.content-header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.cards-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; width: 100%; }
+.exercise-card { background: var(--glass-bg); border: var(--glass-border); border-radius: 15px; overflow: hidden; transition: 0.4s; backdrop-filter: blur(10px); }
+.exercise-card:hover { transform: translateY(-7px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0, 209, 178, 0.15); }
+.card-img-wrap { height: 180px; overflow: hidden; position: relative; background: #111; }
+.card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; filter: grayscale(20%); opacity: 0.9; }
+.exercise-card:hover .card-img-wrap img { filter: grayscale(0%); transform: scale(1.05); opacity: 1; }
+.card-info { padding: 20px; }
+.card-info h3 { font-size: 16px; margin-bottom: 10px; color: #fff; text-transform: uppercase; }
+.badge { padding: 5px 10px; border-radius: 15px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.badge.easy { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
+.badge.hard { background: rgba(231, 76, 60, 0.15); color: #e74c3c; border: 1px solid #e74c3c; }
+
+/* --- MODAL --- */
+#modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; backdrop-filter: blur(8px); }
+#modal > div { background: #1a1a1a; padding: 40px; border-radius: 20px; width: 380px; border: 1px solid var(--primary); text-align: center; box-shadow: 0 0 50px rgba(0,209,178,0.2); }
+#modal input[type="text"] { width: 100%; padding: 15px; margin: 15px 0; background: #222; border: 1px solid #444; color: white; border-radius: 8px; font-size: 16px; outline: none; }
+#modal input[type="text"]:focus { border-color: var(--primary); }
+
+/* Buttons */
+.btn-main { width: 100%; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 30px; font-weight: 700; text-transform: uppercase; transition: 0.3s; cursor: pointer; }
+.btn-main:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 209, 178, 0.3); }
+.btn-cancel { background: transparent; border: 1px solid #444; color: #888; margin-top: 15px; width: 100%; padding: 10px; border-radius: 30px; cursor: pointer; transition: 0.3s; font-weight: 600; text-transform: uppercase; }
+.btn-cancel:hover { border-color: #ff4757; color: #ff4757; background: rgba(255, 71, 87, 0.1); }
+
+/* --- AUTH PAGES (LOGIN / REGISTER) --- */
+
+/* Центрування контейнера по вертикалі та горизонталі */
+.auth-container {
+    width: 100%;
+    max-width: 420px;
+    margin: 80px auto; /* Відступ зверху, щоб було по центру */
+    padding: 40px;
+    background: var(--glass-bg); /* Скляний фон */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+/* Стилізація полів, які генерує Django (form.as_p) */
+.auth-form p {
+    text-align: left;
+    margin-bottom: 20px;
+    color: #ccc;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Самі поля вводу (Username, Password) */
+.auth-form input[type="text"],
+.auth-form input[type="password"],
+.auth-form input[type="email"] {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #444;
+    color: white;
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-top: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.auth-form input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 10px rgba(0, 209, 178, 0.2);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Підказки під полями (Help text) */
+.helptext {
+    display: block;
+    font-size: 11px;
+    color: #888;
+    margin-top: 5px;
+}
+
+/* Помилки (якщо пароль неправильний) */
+.errorlist {
+    color: #ff4757;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 15px;
+    font-size: 13px;
+    text-align: left;
+    background: rgba(255, 71, 87, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ff4757;
+}
+
+/* Прибираємо стандартні буллити списку Django */
+.auth-form ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* --- WORKOUTS (Чорний квадрат) --- */
+.big-card {
+    background: #000000; /* Чисто чорний фон */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+    position: relative;
+    z-index: 10;
+}
+
+/* Робимо таблицю більш контрастною на чорному фоні */
+.custom-table th { border-bottom: 2px solid var(--primary); color: var(--primary); }
+.custom-table td { border-bottom: 1px solid rgba(255,255,255,0.15); color: white; }
+
+/* Календар без рамок контейнера (як ти хотів) */
+.calendar-wrapper {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    backdrop-filter: none;
+}
+
+#calendar {
+    background: rgba(10, 10, 10, 0.95); /* Майже чорний для контрасту */
+    border: 1px solid #333;
+    /* Решта стилів з минулого разу залишаються */
+}
+
+/* --- TABLE ACTION BUTTON --- */
+.btn-action {
+    display: inline-block;
+    text-decoration: none;
+    background: transparent;
+    color: var(--primary); /* Неоновий текст */
+    border: 1px solid var(--primary); /* Неонова рамка */
+    padding: 8px 25px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-action:hover {
+    background: var(--primary); /* Заливка при наведенні */
+    color: white; /* Текст стає білим */
+    box-shadow: 0 0 15px rgba(0, 209, 178, 0.5); /* Ефект світіння */
+    transform: translateY(-2px); /* Легкий підйом */
+}
+
+.btn-action:active {
+    transform: translateY(0);
+}

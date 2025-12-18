@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Training Planner{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+</head>
+<body class="site-body">
+    <header class="main-header">
+        <div class="header-container">
+            <a href="{% url 'index' %}" class="logo">TRAINING<span>PLANNER</span></a>
+            <nav class="auth-nav">
+                {% if user.is_authenticated %}
+                    <span class="nav-user"><i class="fa-solid fa-circle-user"></i> {{ user.username }}</span>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">ВИЙТИ</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="nav-item">УВІЙТИ</a>
+                    <a href="{% url 'registration' %}" class="nav-register-btn">РЕЄСТРАЦІЯ</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <a href="{% url 'index' %}" title="Головна"><i class="fa-solid fa-house"></i></a>
+            <a href="{% url 'exercises' %}" title="Вправи"><i class="fa-solid fa-dumbbell"></i></a>
+            <a href="{% url 'workouts' %}" title="Тренування"><i class="fa-solid fa-fire"></i></a>
+            <a href="{% url 'calendar' %}" title="Календар"><i class="fa-solid fa-calendar-days"></i></a>
+            <a href="{% url 'profile' %}" title="Профіль"><i class="fa-solid fa-user-gear"></i></a>
+        </aside>
+
+        <main class="page-wrapper">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>

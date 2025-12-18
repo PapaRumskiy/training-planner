@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('category', models.CharField(choices=[('Груди', 'Груди'), ('Спина', 'Спина'), ('Руки', 'Руки'), ('Плечі', 'Плечі'), ('Ноги', 'Ноги'), ('Кор', 'Кор')], max_length=50)),
                 ('descriptions', models.TextField(blank=True, null=True)),
                 ('dificulty', models.IntegerField(default=1)),
-                ('image', models.ImageField(upload_to='exercises/')),
+                ('image', models.ImageField(upload_to='media/')),
             ],
         ),
         migrations.AlterModelOptions(
@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
                 ('reps', models.IntegerField(default=8)),
                 ('weight', models.FloatField(default=5)),
                 ('exercise', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='main.exercise')),
-                ('workout', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='exercises', to='main.workout')),
+                ('workout', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='media', to='main.workout')),
             ],
         ),
         migrations.CreateModel(
