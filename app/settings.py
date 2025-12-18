@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
+
 from pathlib import Path
 
 from decouple import config
@@ -124,7 +126,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS=[BASE_DIR / 'main' / 'static' / 'main']
+STATICFILES_DIRS=[BASE_DIR/'main'/'static'/'main']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -133,3 +135,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 AUTH_USER_MODEL="main.User"
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# settings.py
+
+# Куди перенаправляти після успішного входу
+LOGIN_REDIRECT_URL = 'index'
+
+# Куди перенаправляти після виходу
+LOGOUT_REDIRECT_URL = 'index'
+
+# URL для сторінки входу (якщо неавторизований юзер лізе куди не треба)
+LOGIN_URL = 'login'
+
+
+# Налаштування для медіа-файлів (Фото вправ, аватари)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

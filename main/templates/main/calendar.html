@@ -1,24 +1,225 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
-{% load static %} {% block title %}Календар тренувань{% endblock %}
+{% block title %}Календар{% endblock %}
 
 {% block content %}
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 
-    <style>
-  /* Трохи стилів, щоб календар виглядав гарно */
-        #calendar {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 10px;
-            font-family: Arial, Helvetica, sans-serif;
-    }
-    </style>
-
-    <h2>Мій розклад</h2>
-
+<div class="calendar-wrapper">
     <div id='calendar'></div>
+</div>
 
-    <script src="{%  static 'js/exercises.js' %}"></script>
+<div id="modal">
+    <div>
+        <h2 style="color: #00d1b2; margin-top: 0; letter-spacing: 2px;">НОВИЙ ЗАПИС</h2>
+        <input type="text" id="note-input" placeholder="Назва тренування (напр. День ніг)...">
 
+        <div style="text-align: left; margin: 25px 0; color: #ccc; font-size: 14px;">
+            <label style="display:flex; align-items:center; gap:10px; margin-bottom:12px; cursor:pointer;">
+                <input type="radio" name="status" value="planned" id="radio-planned" checked> 🟡 Заплановано
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; margin-bottom:12px; cursor:pointer;">
+                <input type="radio" name="status" value="done" id="radio-done"> 🟢 Виконано
+            </label>
+            <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                <input type="radio" name="status" value="skipped" id="radio-skipped"> 🔴 Пропущено
+            </label>
+        </div>
+
+        <button id="submit-button" class="btn-main">ЗБЕРЕГТИ</button>
+        <button onclick="closeModal()" class="btn-cancel">СКАСУВАТИ</button>
+    </div>
+</div>
+
+<script>
+    let calendar;
+    const modal = document.getElementById('modal');
+    const noteInput = document.getElementById('note-input');
+    const submitBtn = document.getElementById('submit-button');
+    let currentClickInfo = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'uk',
+            firstDay: 1,
+            height: '100%',
+            contentHeight: 'auto',
+            selectable: true,
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,listWeek'
+            },
+            events: '/api/get-trainings/',
+
+            // 1. ДОДАВАННЯ: Клік на пусту клітинку
+            dateClick: function(info) {
+                currentClickInfo = info;
+                openModalForDate(info.dateStr);
+            },
+
+            // 2. ВИДАЛЕННЯ: Клік на існуючу подію (кольорову смужку)
+            eventClick: function(info) {
+                if (confirm(`Видалити запис "${info.event.title}"?`)) {
+                    deleteEvent(info.event);
+                }
+            },
+
+            eventDidMount: function(info) {
+                // Стилізація (твоя логіка)
+                if(info.event.extendedProps.status === 'done') {
+                    info.el.style.backgroundColor = 'rgba(46, 204, 113, 0.8)';
+                    info.el.style.borderLeft = '4px solid #2ecc71';
+                } else if (info.event.extendedProps.status === 'skipped') {
+                    info.el.style.backgroundColor = 'rgba(231, 76, 60, 0.8)';
+                    info.el.style.borderLeft = '4px solid #e74c3c';
+                } else {
+                    info.el.style.backgroundColor = 'rgba(241, 196, 15, 0.8)';
+                    info.el.style.borderLeft = '4px solid #f1c40f';
+                    info.el.style.color = '#000';
+                }
+            }
+        });
+        calendar.render();
+
+        submitBtn.onclick = saveTraining;
+    });
+
+    // --- ФУНКЦІЯ ВИДАЛЕННЯ ---
+    function deleteEvent(eventObj) {
+        const entryId = eventObj.id;
+
+        fetch(`/api/delete_calendar_entry/${entryId}/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                eventObj.remove(); // Видаляємо з календаря візуально
+            } else {
+                alert('Помилка при видаленні');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+function openModalForDate(dateStr) {
+        modal.style.display = 'flex';
+        noteInput.value = '';
+        noteInput.focus();
+
+        // --- ВИПРАВЛЕННЯ ДАТИ ---
+        // Розбиваємо рядок "YYYY-MM-DD" на частини, щоб створити дату в місцевому часі
+        const parts = dateStr.split('-');
+        // new Date(рік, місяць-1, день) -> місяці в JS починаються з 0
+        const clickedDate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+        const today = new Date();
+        today.setHours(0,0,0,0); // Обнуляємо години, хвилини, секунди для "сьогодні"
+
+        // Знаходимо елементи
+        const radioPlanned = document.getElementById('radio-planned');
+        const radioDone = document.getElementById('radio-done');
+        const radioSkipped = document.getElementById('radio-skipped');
+        const labelDone = radioDone.parentElement;
+        const labelSkipped = radioSkipped.parentElement;
+
+        // ПОРІВНЯННЯ
+        if (clickedDate > today) {
+            // --- ТІЛЬКИ МАЙБУТНЄ (Завтра і далі) ---
+
+            radioPlanned.checked = true;
+
+            // Блокуємо
+            radioDone.disabled = true;
+            radioSkipped.disabled = true;
+
+            // Стилі недоступності
+            labelDone.style.opacity = '0.5';
+            labelSkipped.style.opacity = '0.5';
+            labelDone.style.cursor = 'not-allowed';
+            labelSkipped.style.cursor = 'not-allowed';
+
+        } else {
+            // --- СЬОГОДНІ АБО МИНУЛЕ ---
+
+            // За замовчуванням ставимо "Виконано", якщо це минуле/сьогодні
+            // Але якщо хочеш, щоб за замовчуванням було "Заплановано" для сьогодні, зміни тут логіку.
+            // Зараз стоїть: для сьогодні і минулого -> Виконано.
+            radioDone.checked = true;
+
+            // Розблокуємо
+            radioDone.disabled = false;
+            radioSkipped.disabled = false;
+
+            // Повертаємо стилі
+            labelDone.style.opacity = '1';
+            labelSkipped.style.opacity = '1';
+            labelDone.style.cursor = 'pointer';
+            labelSkipped.style.cursor = 'pointer';
+        }
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    // --- ЛОГІКА ЗБЕРЕЖЕННЯ (Трохи покращена) ---
+    function saveTraining() {
+        if (!currentClickInfo) return;
+        const title = noteInput.value;
+        const statusElement = document.querySelector('input[name="status"]:checked');
+        const status = statusElement ? statusElement.value : 'planned';
+        const date = currentClickInfo.dateStr;
+
+        if (title) {
+            fetch('/api/add_calendar_entry/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ date: date, note: title, status: status })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Error');
+                return response.json();
+            })
+            .then(data => {
+                calendar.addEvent({
+                    id: data.id,
+                    title: title,
+                    start: date,
+                    allDay: true,
+                    extendedProps: { status: status }
+                });
+                closeModal();
+            })
+            .catch(error => alert('Помилка збереження'));
+        } else {
+            alert("Введіть назву!");
+        }
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
 {% endblock %}

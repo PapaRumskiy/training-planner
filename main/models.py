@@ -35,7 +35,7 @@ class Exercise(models.Model):
         )
     descriptions=models.TextField(blank=True, null=True)
     dificulty=models.IntegerField(default=1)
-    image=models.ImageField(upload_to='exercises/')
+    image=models.ImageField(upload_to='media/')
 
 
 class WorkOut(models.Model):
@@ -49,7 +49,7 @@ class WorkOut(models.Model):
     
 
 class WorkoutExercise(models.Model):
-    workout=models.ForeignKey(WorkOut, on_delete=models.CASCADE, related_name="exercises")
+    workout=models.ForeignKey(WorkOut, on_delete=models.CASCADE, related_name="media")
     exercise=models.ForeignKey(Exercise, on_delete=models.CASCADE)
     sets=models.IntegerField(default=4)
     reps=models.IntegerField(default=8)

@@ -1,10 +1,28 @@
-{% extends "main/base.html" %}
-
-{% block title %}Home{% endblock %}
-
+{% extends 'main/base.html' %}
 {% block content %}
-<section class="welcome">
-    <h2>Welcome to your Training Planner!</h2>
-    <p>Plan your workouts, track exercises, and stay fit!</p>
+<section class="hero-section">
+    <div class="hero-container">
+        <h1>ПЛАНУЙ. ТРЕНУЙСЯ. ПЕРЕМАГАЙ.</h1>
+        <p>Професійний інструмент для керування твоїм прогресом</p>
+
+        <div class="main-navigation-cards">
+            <a href="{% url 'exercises' %}" class="nav-card yellow">
+                <i class="fa-solid fa-dumbbell"></i>
+                <span>Вправи</span>
+            </a>
+            <a href="{% url 'workouts' %}" class="nav-card orange">
+                <i class="fa-solid fa-fire"></i>
+                <span>Тренування</span>
+            </a>
+            <a href="{% url 'calendar' %}" class="nav-card blue">
+                <i class="fa-solid fa-calendar-alt"></i>
+                <span>Календар</span>
+            </a>
+            <a href="{% url 'profile' %}" class="nav-card purple">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Профіль</span>
+            </a>
+        </div>
+    </div>
 </section>
 {% endblock %}

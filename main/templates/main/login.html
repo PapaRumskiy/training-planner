@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="auth-container">
+    <h2 style="color: var(--primary); letter-spacing: 2px;">ВХІД</h2>
+    <form method="post" action="{% url 'login' %}" class="auth-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-main">УВІЙТИ</button>
+    </form>
+    <p style="margin-top: 25px; font-size: 14px;">Ще не з нами? <a href="{% url 'registration' %}" style="color: var(--primary); font-weight: 700; text-decoration: none;">РЕЄСТРАЦІЯ</a></p>
+</div>
+{% endblock %}
